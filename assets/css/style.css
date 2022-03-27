@@ -1,0 +1,19 @@
+:root {
+    --primary:#f4f56e;
+    --secondary: #72e8e1;
+    --tertiary: #58b3d3;
+    --quinary: #418c9f;
+}
+*{
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+body h1 {
+    background-color: var(--quinary);
+    height: 100px;
+    color: var(--primary);
+}
+.card-header{
+ background-color: var(--secondary);
+ color: var(--quinary);
+}
