@@ -17,3 +17,15 @@ body h1 {
  background-color: var(--secondary);
  color: var(--quinary);
 }
+.favourable {
+    background-color: green;
+    color: white;
+}
+.moderate {
+    background-color: orange;
+    color: white;
+}
+.severe {
+    background-color: red;
+    color: white;
+}
