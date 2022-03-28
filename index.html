@@ -18,7 +18,7 @@
 </head>
 
 <body class="flex-column min-100-vh">
-    <header class="jumbotron jumbotron-fluid ">
+    <header class="jumbotron jumbotron-fluid">
         <h1 class="display-4 text-center">Weather Dashboard</h1>
     </header>
 
@@ -28,7 +28,7 @@
 
             <div class="card">
                 <h3 class="card-header text-uppercase text-center">Search By City</h3>
-                <form id="user-form" class="card-body">
+                <form id="user-form" class="card-body text-center">
                     <label class="form-label" for="city">City</label>
                     <input name="city" id="city" type="text" autofocus="true" class="form-input" />
                     <button type="submit" class="get-btn btn btn-dark">Get Weather</button>
@@ -49,7 +49,7 @@
                     <ul class="details"></ul>
                 </div>
             </div>
-            <div id="5-day" class="">5 day weather will be here</div>
+            <div id="5-day" class="row future-container"></div>
         </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
