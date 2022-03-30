@@ -1,8 +1,8 @@
-// need to fetch data + make sure it works
-// create functions - one that fetches data
-// one that loads onto page the weather info
-//one that saves to localstorage + creates a button
-//reminder to see why city=Montreal is always in url
+// need to fetch data + make sure it works DONE
+// create functions - one that fetches data DONE
+// one that loads onto page the weather info DONE
+//one that saves to localstorage + creates a button DONE
+//reminder to see why city=Montreal is always in url 
 var localSaved = JSON.parse(localStorage.getItem("locations")) || [];
 var locationInput = document.querySelector("#city");
 var userForm = document.querySelector("#user-form");
@@ -11,6 +11,7 @@ var listEl = document.querySelector(".details");
 var currentWContainer = document.querySelector(".current-weather-container");
 var cityBtnEl = document.querySelector("#city-buttons");
 var futureWeatherContainer = document.querySelector(".future-container");
+var buttonIdCounter = 0;
 
 // var submitBtn = document.querySelector(".get-btn");
 
@@ -26,6 +27,8 @@ var formSubmitHandler = function (event) {
         getApiLocation(location);
         locationInput.value = "";
         displayLocation(location);
+
+        saveButtons();
 
 
     } else {
@@ -68,7 +71,11 @@ var getWeather = function (lat, long) {
 }
 
 var getFutureWeather = function (data) {
-    futureWeatherContainer.textContent = "5-Day Forecast:";
+    var dayForecast = document.createElement("div");
+    dayForecast.classList.add("col-12", "dayforecast")
+    dayForecast.textContent= "5-Day Forecast:"
+    futureWeatherContainer.appendChild(dayForecast);
+
     for (var i = 1; i < 6; i++) {
         var dayEl = document.createElement("div");
         dayEl.classList.add("border", "col-12", "col-lg-2", "days");
@@ -84,7 +91,7 @@ var getFutureWeather = function (data) {
         
         var icon = document.createElement("li");
         icon.setAttribute("class", "days-text");
-        icon.textContent="icon here";
+        icon.innerHTML="<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png'>";
         days.appendChild(icon);
         
         var temp = document.createElement("li");
@@ -109,6 +116,7 @@ var getFutureWeather = function (data) {
 var displayLocation = function (location) {
     currentWeather.innerHTML = "";
     listEl.innerHTML = "";
+    console.log(location);
     currentWContainer.setAttribute("class", "border")
     var date = moment().format('MMMM Do YYYY')
     var weatherH2 = document.createElement("h2");
@@ -152,25 +160,25 @@ var saveLocation = function () {
 }
 
 var saveButtons = function () {
-    // localSaved.forEach(() => {
+    cityBtnEl.innerHTML = "";
     for (var i = 0; i < localSaved.length; i++) {
-        //  if (localSaved.locations != localSaved.locations) {
         newBtn = document.createElement("button");
         newBtn.textContent = localSaved[i].locations;
-        // newBtn.setAttribute("href", "");
         newBtn.classList.add("text-center", "text-uppercase", "new-btn");
+        newBtn.setAttribute("data-task-id", buttonIdCounter);
+        buttonIdCounter++;
         cityBtnEl.appendChild(newBtn);
 
+        newBtn.addEventListener("click", function (event) {
+            getApiLocation(event.target.textContent);
+            displayLocation(event.target.textContent);
 
-        //  };
+            
+        });
     };
+    
 }
 //how do I make sure this happens after button is clicked? 
 saveButtons();
 
 userForm.addEventListener("submit", formSubmitHandler);
-cityBtnEl.addEventListener("click", function (event) {
-    getApiLocation(event.target.textContent);
-    displayLocation(event.target.textContent);
-
-})

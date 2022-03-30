@@ -27,18 +27,20 @@
         <div class="col-12 col-md-4">
 
             <div class="card">
-                <h3 class="card-header text-uppercase text-center">Search By City</h3>
+                <h3 class="card-header text-uppercase text-center">Search For a City</h3>
                 <form id="user-form" class="card-body text-center">
-                    <label class="form-label" for="city">City</label>
-                    <input name="city" id="city" type="text" autofocus="true" class="form-input" />
-                    <button type="submit" class="get-btn btn btn-dark">Get Weather</button>
+                    <label class="form-label" for="city"></label>
+                    <input name="city" id="city" type="text" autofocus="true" class="form-input" placeholder="City Name" />
+                    <button type="submit" class="get-btn btn">Get Weather</button>
                 </form>
-            </div>
-
-            <div class="card">
+                <hr>
                 <div class="card-body" id="city-buttons">
                 </div>
             </div>
+
+            <!-- <div class="card"> -->
+               
+            <!-- </div> -->
 
         </div>
 
@@ -49,7 +51,7 @@
                     <ul class="details"></ul>
                 </div>
             </div>
-            <div id="5-day" class="row future-container"></div>
+            <div id="5-day" class="row future-container justify-content-center"></div>
         </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
