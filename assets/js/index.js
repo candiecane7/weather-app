@@ -15,6 +15,11 @@ var buttonIdCounter = 0;
 
 // var submitBtn = document.querySelector(".get-btn");
 
+ var mph = function(x){
+     var y = 2.236936;
+ return (x * y).toFixed(2);
+ }
+
 var formSubmitHandler = function (event) {
     event.preventDefault();
     var location = locationInput.value.trim();
@@ -101,7 +106,7 @@ var getFutureWeather = function (data) {
         
         var wind = document.createElement("li")
         wind.setAttribute("class", "days-text");
-        wind.textContent= "Wind: " + data.daily[i].wind_speed + " MPH";
+        wind.textContent= "Wind: " + mph(data.daily[i].wind_speed) + " MPH";
         days.appendChild(wind);
         
         var humidity = document.createElement("li");
@@ -132,7 +137,7 @@ var displayWeather = function (data) {
 
     var wind = document.createElement("li");
     //dont forget to fix this!!!!! not current mph, but mps
-    wind.textContent = "Wind: " + data.current.wind_speed + " MPH";
+    wind.textContent = "Wind: " + mph(data.current.wind_speed) + " MPH";
     listEl.appendChild(wind);
 
     var humidity = document.createElement("li");
