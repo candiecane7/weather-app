@@ -13,8 +13,6 @@ var cityBtnEl = document.querySelector("#city-buttons");
 var futureWeatherContainer = document.querySelector(".future-container");
 var buttonIdCounter = 0;
 
-// var submitBtn = document.querySelector(".get-btn");
-
  var mph = function(x){
      var y = 2.236936;
  return (x * y).toFixed(2);
@@ -22,13 +20,20 @@ var buttonIdCounter = 0;
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
-    var location = locationInput.value.trim();
+    var location = locationInput.value.trim().toUpperCase();
 
     if (location) {
         var newSave = { locations: location }
-        localSaved.push(newSave);
+        // for (var i = 0; i<localSaved.length;i++){
+        //     if(localSaved[i].locations === location){
+        //         break;
+        //     } else {
+        
+            localSaved.push(newSave);
+            
+        //     };
+        // };
         saveLocation();
-
         getApiLocation(location);
         locationInput.value = "";
         displayLocation(location);
@@ -76,6 +81,7 @@ var getWeather = function (lat, long) {
 }
 
 var getFutureWeather = function (data) {
+    futureWeatherContainer.innerHTML="";
     var dayForecast = document.createElement("div");
     dayForecast.classList.add("col-12", "dayforecast")
     dayForecast.textContent= "5-Day Forecast:"
@@ -136,7 +142,6 @@ var displayWeather = function (data) {
     listEl.appendChild(temp);
 
     var wind = document.createElement("li");
-    //dont forget to fix this!!!!! not current mph, but mps
     wind.textContent = "Wind: " + mph(data.current.wind_speed) + " MPH";
     listEl.appendChild(wind);
 
@@ -182,8 +187,7 @@ var saveButtons = function () {
         });
     };
     
-}
-//how do I make sure this happens after button is clicked? 
+} 
 saveButtons();
 
 userForm.addEventListener("submit", formSubmitHandler);
