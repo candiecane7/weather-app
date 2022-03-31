@@ -37,7 +37,7 @@ var formSubmitHandler = function (event) {
 };
 
 var getApiLocation = function (location) {
-    var apiURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + location + "&limit=1&appid=9c6774c19b3c951137a1b16a4660a14e";
+    var apiURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + location + "&limit=1&appid=9c6774c19b3c951137a1b16a4660a14e";
 
     fetch(apiURL).then(function (response) {
         if (response.ok) {
