@@ -6,7 +6,7 @@
 }
 *{
     font-family: 'Red Hat Display', sans-serif;
-    color: var(--quinary);
+    color: var(--tertiary);
 }
 
 body h1 {
@@ -14,6 +14,7 @@ body h1 {
     height: 100px;
     color: var(--primary);
 }
+
 .card-header{
  background-color: var(--tertiary);
  color: var(--primary);
@@ -60,6 +61,7 @@ button {
 .days{
     background-color: var(--quinary);
     margin: 0 8px;
+    box-shadow: 3px 2px var(--tertiary);
 }
 .days-text {
     list-style: none;

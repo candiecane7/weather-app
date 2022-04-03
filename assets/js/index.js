@@ -23,23 +23,16 @@ var formSubmitHandler = function (event) {
     var location = locationInput.value.trim().toUpperCase();
 
     if (location) {
-        var newSave = { locations: location }
-        // for (var i = 0; i<localSaved.length;i++){
-        //     if(localSaved[i].locations === location){
-        //         break;
-        //     } else {
+        var newSave = location;
         
-            localSaved.push(newSave);
-            
-        //     };
-        // };
+        if (localSaved.indexOf(location)===-1){
+                localSaved.push(newSave);
+        };
+        
         saveLocation();
         getApiLocation(location);
         locationInput.value = "";
-        displayLocation(location);
-
         saveButtons();
-
 
     } else {
         alert("please enter a city name");
@@ -52,10 +45,12 @@ var getApiLocation = function (location) {
     fetch(apiURL).then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
+                console.log(data);
                 var latitude = data[0].lat;
                 var longitude = data[0].lon;
+                
 
-                getWeather(latitude, longitude);
+                getWeather(latitude, longitude, location);
                 // getFutureWeather
             });
         } else {
@@ -64,14 +59,16 @@ var getApiLocation = function (location) {
     })
 }
 
-var getWeather = function (lat, long) {
+var getWeather = function (lat, long, location) {
     var apiURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&appid=9c6774c19b3c951137a1b16a4660a14e";
     fetch(apiURL).then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
+                displayLocation(location, data);
                 displayWeather(data);
-                console.log(data);
+
                 getFutureWeather(data);
+                
 
             })
         } else {
@@ -96,7 +93,7 @@ var getFutureWeather = function (data) {
         dayEl.appendChild(days);
         
         var date = document.createElement("li");
-        date.setAttribute("class", "days-text");
+        date.classList.add("font-weight-bold", "days-text");
         date.textContent=moment.unix(data.daily[i].dt).format("L");
         days.appendChild(date);
         
@@ -124,19 +121,20 @@ var getFutureWeather = function (data) {
 
 }
 
-var displayLocation = function (location) {
+var displayLocation = function (location, data) {
     currentWeather.innerHTML = "";
     listEl.innerHTML = "";
-    console.log(location);
+    // console.log(location);
     currentWContainer.setAttribute("class", "border")
     var date = moment().format('MMMM Do YYYY')
     var weatherH2 = document.createElement("h2");
-    weatherH2.textContent = location + " (" + date + ")";
+    weatherH2.innerHTML = location + " (" + date + ")" + "<img src='http://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png'>";
     currentWeather.setAttribute("class", "text-uppercase");
     currentWeather.appendChild(weatherH2);
 }
 
 var displayWeather = function (data) {
+    debugger;
     var temp = document.createElement("li");
     temp.textContent = "Temp: " + Math.round(data.current.temp) + " °C (Feels like " + Math.round(data.current.feels_like) + " °C)";
     listEl.appendChild(temp);
@@ -173,7 +171,7 @@ var saveButtons = function () {
     cityBtnEl.innerHTML = "";
     for (var i = 0; i < localSaved.length; i++) {
         newBtn = document.createElement("button");
-        newBtn.textContent = localSaved[i].locations;
+        newBtn.textContent = localSaved[i];
         newBtn.classList.add("text-center", "text-uppercase", "new-btn");
         newBtn.setAttribute("data-task-id", buttonIdCounter);
         buttonIdCounter++;
