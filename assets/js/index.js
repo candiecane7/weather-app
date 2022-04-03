@@ -1,8 +1,3 @@
-// need to fetch data + make sure it works DONE
-// create functions - one that fetches data DONE
-// one that loads onto page the weather info DONE
-//one that saves to localstorage + creates a button DONE
-//reminder to see why city=Montreal is always in url 
 var localSaved = JSON.parse(localStorage.getItem("locations")) || [];
 var locationInput = document.querySelector("#city");
 var userForm = document.querySelector("#user-form");
@@ -13,11 +8,13 @@ var cityBtnEl = document.querySelector("#city-buttons");
 var futureWeatherContainer = document.querySelector(".future-container");
 var buttonIdCounter = 0;
 
+//this functions changes m/s to mph. I wanted celcius but not m/s so I just mathed it 
  var mph = function(x){
      var y = 2.236936;
  return (x * y).toFixed(2);
  }
 
+ //function that happens once city is input and get weather button is clicked
 var formSubmitHandler = function (event) {
     event.preventDefault();
     var location = locationInput.value.trim().toUpperCase();
@@ -39,19 +36,20 @@ var formSubmitHandler = function (event) {
     }
 };
 
+//function to get lat and lon for city that was chosen
 var getApiLocation = function (location) {
     var apiURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + location + "&limit=1&appid=9c6774c19b3c951137a1b16a4660a14e";
 
     fetch(apiURL).then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
-                console.log(data);
+
                 var latitude = data[0].lat;
                 var longitude = data[0].lon;
                 
 
                 getWeather(latitude, longitude, location);
-                // getFutureWeather
+        
             });
         } else {
             alert("City not found")
@@ -59,6 +57,7 @@ var getApiLocation = function (location) {
     })
 }
 
+//function to get weather based on lat and lon found in previous function
 var getWeather = function (lat, long, location) {
     var apiURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&appid=9c6774c19b3c951137a1b16a4660a14e";
     fetch(apiURL).then(function (response) {
@@ -77,6 +76,7 @@ var getWeather = function (lat, long, location) {
     })
 }
 
+//function that displays the 5-day forecast section
 var getFutureWeather = function (data) {
     futureWeatherContainer.innerHTML="";
     var dayForecast = document.createElement("div");
@@ -121,6 +121,7 @@ var getFutureWeather = function (data) {
 
 }
 
+//function that displays city name, date and icon for the current weather
 var displayLocation = function (location, data) {
     currentWeather.innerHTML = "";
     listEl.innerHTML = "";
@@ -133,6 +134,7 @@ var displayLocation = function (location, data) {
     currentWeather.appendChild(weatherH2);
 }
 
+//function that displays current weather details
 var displayWeather = function (data) {
     debugger;
     var temp = document.createElement("li");
@@ -161,12 +163,13 @@ var displayWeather = function (data) {
     }
 }
 
+//function that saves the locations
 var saveLocation = function () {
-    //dont forget you dont want to have duplicate buttons!!
     localStorage.setItem("locations", JSON.stringify(localSaved));
 
 }
 
+//function that makes buttons out of previously chosen cities
 var saveButtons = function () {
     cityBtnEl.innerHTML = "";
     for (var i = 0; i < localSaved.length; i++) {
